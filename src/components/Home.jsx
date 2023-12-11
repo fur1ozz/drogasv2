@@ -3,7 +3,9 @@
 function Home(){
     return(
         <>
-            <h1>Drogas</h1>
+            <div>
+
+            </div>
         </>
     );
 }

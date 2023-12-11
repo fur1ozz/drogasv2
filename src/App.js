@@ -6,7 +6,7 @@ function App() {
       <Router>
         <div className="min-h-screen dark:bg-[#1d2125]">
           <Routes>
-            <Route exact path="/Home" element = {<HomePage />}/>
+            <Route exact path="/home" element = {<HomePage />}/>
           </Routes>
         </div>
       </Router>
