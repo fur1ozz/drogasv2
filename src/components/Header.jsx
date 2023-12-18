@@ -1,46 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import {useDarkMode} from "../utils/HeaderUtils";
 
 function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isDarkMode, toggleDarkMode] = useDarkMode();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    const storedDarkMode = localStorage.getItem("darkMode");
-    const [isDarkMode, setIsDarkMode] = useState(
-        storedDarkMode !== null ? JSON.parse(storedDarkMode) : null
-    );
-
-    useEffect(() => {
-        if (isDarkMode !== null) {
-            if (isDarkMode === "dark") {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-            localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
-        }
-    }, [isDarkMode]);
-
-    useEffect(() => {
-        if (isDarkMode === null) {
-            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                setIsDarkMode("dark");
-            } else {
-                setIsDarkMode("light");
-            }
-        }
-    }, [isDarkMode]);
-
-    const toggleDarkMode = () => {
-        setIsDarkMode((prevMode) => (prevMode === "dark" ? "light" : "dark"));
-    };
-
     return (
         <>
-            <header className={`hidden md:block p-4 top-0 w-full sticky z-20 dark:bg-[#212527] bg-gray-100`}>
+            <header className={`hidden md:block p-4 top-0 w-full fixed z-20 dark:bg-[#212527]/20 bg-gray-100/20 `}>
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center space-x-6">
                         <Link
@@ -89,7 +61,7 @@ function Header() {
                             )}
                         </button>
                         <Link
-                            to="/Link5"
+                            to="/register"
                             className={`text-[#81294f] hover:text-[#6d2143] dark:text-[#e7c02a] dark:hover:text-[#cbaa29]`}
                         >
                             About

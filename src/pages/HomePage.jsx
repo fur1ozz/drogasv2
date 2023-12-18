@@ -1,11 +1,18 @@
 import Home from "../components/Home";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Header2 from "../components/Header2";
+import {DangerToast, Toast, WarningToast} from "../utils/Toasts";
 
 function HomePage(){
     return(
         <>
-            <Header />
+            {/*<Toast message="Item moved successfully." />*/}
+            {/*<DangerToast message="Item has been deleted." />*/}
+            {/*<WarningToast message="Improve password difficulty." />*/}
+            <Header2 />
             <Home />
+            <Footer />
         </>
     );
 }
