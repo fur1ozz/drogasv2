@@ -1,5 +1,4 @@
 import Home from "../components/Home";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Header2 from "../components/Header2";
 import {DangerToast, Toast, WarningToast} from "../utils/Toasts";
