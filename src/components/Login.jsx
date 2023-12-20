@@ -7,17 +7,17 @@ function Login() {
     const [isDarkMode, toggleDarkMode] = useDarkMode();
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
+    const [logData, setLogData] = useState({
         email: '',
         password: '',
     });
 
-    const handleChange = handleInputChange(formData, setFormData);
+    const handleChange = handleInputChange(logData, setLogData);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log('Form data submitted:', formData);
+        console.log('Form data submitted:', logData);
     };
 
     return (
@@ -54,7 +54,7 @@ function Login() {
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                 Sign in to your account
                             </h1>
-                            <form className="space-y-4 md:space-y-6">
+                            <div className="space-y-4 md:space-y-6">
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                         Your email
@@ -63,7 +63,7 @@ function Login() {
                                         type="email"
                                         name="email"
                                         id="email"
-                                        value={formData.email}
+                                        value={logData.email}
                                         onChange={handleChange}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="name@company.com"
@@ -78,7 +78,7 @@ function Login() {
                                         type="password"
                                         name="password"
                                         id="password"
-                                        value={formData.password}
+                                        value={logData.password}
                                         onChange={handleChange}
                                         placeholder="••••••••"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -117,7 +117,7 @@ function Login() {
                                     Sign up
                                 </Link>
                                 </p>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

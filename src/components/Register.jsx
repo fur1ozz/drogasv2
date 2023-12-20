@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom';
 import {handleInputChange} from "../utils/TwoWayBinding";
 import {useDarkMode} from "../utils/HeaderUtils";
@@ -8,24 +9,43 @@ function Register() {
     const [isDarkMode, toggleDarkMode] = useDarkMode();
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
+    const [regData, setRegData] = useState({
         email: '',
         password: '',
         confirmPassword: '',
     });
-    const handleChange = handleInputChange(formData, setFormData);
+    const handleChange = handleInputChange(regData, setRegData);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (formData.password !== formData.confirmPassword) {
-            // Password and confirm password do not match
-            WarningToast({ message: 'Passwords do not match' });
-            console.log("huh");
+        if (!regData.password || !regData.confirmPassword) {
+            console.log({ message: 'Write your password' });
             return;
         }
-        console.log('Form data submitted:', formData);
+        if (regData.password !== regData.confirmPassword) {
+            console.log({ message: 'Passwords do not match' });
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:8080/lapsins_api/drogasAPI/register.php', {
+                email: regData.email,
+                password: regData.password,
+            });
+
+            console.log('Registration successful', response.data);
+            setRegData({
+                email: '',
+                password: '',
+                confirmPassword: '',
+            });
+        } catch (error) {
+            console.error('Registration failed', error.response ? error.response.data : error.message);
+        }
     };
+
+
 
     return (
         <>
@@ -61,7 +81,7 @@ function Register() {
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                 Create an account
                             </h1>
-                            <form className="space-y-4 md:space-y-6">
+                            <div className="space-y-4 md:space-y-6">
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                         Your email
@@ -70,7 +90,7 @@ function Register() {
                                         type="email"
                                         name="email"
                                         id="email"
-                                        value={formData.email}
+                                        value={regData.email}
                                         onChange={handleChange}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="name@company.com"
@@ -85,7 +105,7 @@ function Register() {
                                         type="password"
                                         name="password"
                                         id="password"
-                                        value={formData.password}
+                                        value={regData.password}
                                         onChange={handleChange}
                                         placeholder="••••••••"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -100,7 +120,7 @@ function Register() {
                                         type="password"
                                         name="confirmPassword"
                                         id="confirm-password"
-                                        value={formData.confirmPassword}
+                                        value={regData.confirmPassword}
                                         onChange={handleChange}
                                         placeholder="••••••••"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -136,7 +156,7 @@ function Register() {
                                     Login here
                                 </Link>
                                 </p>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
