@@ -1,5 +1,3 @@
-// HomePage.js
-
 import React from 'react';
 
 const Home = () => {

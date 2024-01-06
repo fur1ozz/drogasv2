@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {handleInputChange} from "../utils/TwoWayBinding";
 import {useDarkMode} from "../utils/HeaderUtils";
+import axios from "axios";
 
 function Login() {
     const [isDarkMode, toggleDarkMode] = useDarkMode();
@@ -14,17 +15,46 @@ function Login() {
 
     const handleChange = handleInputChange(logData, setLogData);
 
-    const handleSubmit = (e) => {
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //
+    //     console.log('Form data submitted:', logData);
+    // };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('Form data submitted:', logData);
+        if (!logData.email) {
+            console.log({ message: 'Write your email' });
+            return;
+        }
+        if (!logData.password) {
+            console.log({ message: 'Write your password' });
+            return;
+        }
+
+
+        try {
+            const response = await axios.post('http://localhost:8080/lapsins_api/drogasAPI/login.php', {
+                email: logData.email,
+                pass: logData.password,
+            });
+
+            console.log('Login successful', response.data);
+            setLogData({
+                email: '',
+                password: '',
+            });
+        } catch (error) {
+            console.error('Login failed', error.response ? error.response.data : error.message);
+        }
     };
 
     return (
         <>
             <button
                 className="absolute top-4 left-4 p-2 text-primary-700 focus:outline-none"
-                onClick={() => navigate(-1)}
+                onClick={() => navigate("/")}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
