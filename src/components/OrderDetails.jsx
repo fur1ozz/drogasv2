@@ -53,9 +53,30 @@ function OrderDetails() {
         }
     };
 
+    const handleSubmitOrderStatus = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/lapsins_api/drogasAPI/updateOrderStatus.php', {
+                order_id: orderId,
+            });
+
+            console.log('Order Updated', response.data);
+        } catch (error) {
+            console.error('Update failed', error.response ? error.response.data : error.message);
+        }
+    }
+
     return(
         <>
             <SimpleHeader navigatePath={-1}/>
+            <button
+                className="absolute top-14 left-4 p-2 text-primary-700 focus:outline-none font-semibold text-lg"
+                onClick={handleSubmitOrderStatus}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
+                </svg>
+            </button>
             <button
                 className="absolute top-14 right-4 p-2 text-primary-700 focus:outline-none font-semibold text-lg"
                 onClick={handleSubmitPDF}

@@ -1,14 +1,19 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useDarkMode} from "../utils/HeaderUtils";
 import React, {useState} from "react";
 
 function Header2(){
     const [isDarkMode, toggleDarkMode] = useDarkMode();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const location = useLocation();
+
 
     const handleMobileMenuToggle = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
+
+    const access = localStorage.getItem("access");
+
     return(
       <>
           <header className="absolute z-10 w-full">
@@ -49,23 +54,25 @@ function Header2(){
                       >
                           <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                               <li>
-                                  <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
+                                  <Link to="/" className={`block py-2 pr-4 pl-3 lg:bg-transparent lg:p-0 border-b border-gray-100 dark:border-gray-700 lg:border-0 ${location.pathname === '/home' ? 'bg-primary-700 lg:text-primary-700 text-white dark:text-white rounded' : 'text-gray-700 dark:text-gray-400'}`}>Home</Link>
                               </li>
                               <li>
-                                  <a href="#" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Marketplace</a>
+                                  <Link to="/market" className={`block py-2 pr-4 pl-3 lg:bg-transparent lg:p-0 border-b border-gray-100 dark:border-gray-700 lg:border-0 ${location.pathname === '/market' ? 'bg-primary-700 lg:text-primary-700 text-white dark:text-white rounded' : 'text-gray-700 dark:text-gray-400'}`}>Marketplace</Link>
                               </li>
                               <li>
                                   <a href="#" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Features</a>
                               </li>
                               <li>
-                                  <Link to="/team" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Team</Link>
+                                  <Link to="/team" className={`block py-2 pr-4 pl-3 lg:bg-transparent lg:p-0 border-b border-gray-100 dark:border-gray-700 lg:border-0 ${location.pathname === '/team' ? 'bg-primary-700 lg:text-primary-700 text-white dark:text-white rounded' : 'text-gray-700 dark:text-gray-400'}`}>Team</Link>
                               </li>
                               <li>
                                   <a href="#" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
                               </li>
-                              <li>
-                                  <Link to="/worker" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Worker</Link>
-                              </li>
+                              {access !== "client" && (
+                                  <li>
+                                      <Link to="/worker" className={`block py-2 pr-4 pl-3 lg:bg-transparent lg:p-0 border-b border-gray-100 dark:border-gray-700 lg:border-0 ${location.pathname === '/worker' ? 'bg-primary-700 lg:text-primary-700 text-white dark:text-white rounded' : 'text-gray-700 dark:text-gray-400'}`}>Worker</Link>
+                                  </li>
+                              )}
                           </ul>
                       </div>
                   </div>
