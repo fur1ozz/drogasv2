@@ -9,6 +9,7 @@ import WorkerWelcomePage from "./pages/WorkerWelcomePage";
 import OrderShopChoose from "./components/OrderShopChoose";
 import OrderChose from "./components/OrderChose";
 import OrderDetails from "./components/OrderDetails";
+import OrderStatusShelf from "./components/OrderItemShelf";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path="/orders" element = {<OrderShopChoose />}/>
               <Route path="/orders/shop" element = {<OrderChose />}/>
               <Route path="/order-details" element = {<OrderDetails />}/>
+              <Route path="/shelf-place" element = {<OrderStatusShelf />}/>
 
               {/*User processing*/}
             <Route path="/register" element = {<Register />}/>

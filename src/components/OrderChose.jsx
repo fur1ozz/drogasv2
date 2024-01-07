@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {SimpleHeader} from "./SimpleHeader";
+import {ConditionalAccessComponent} from "../utils/UserAccesTest";
 
 
 function OrderChose() {
@@ -27,7 +28,7 @@ function OrderChose() {
     }, [orderId]);
 
     return (
-        <>
+        <ConditionalAccessComponent>
             <SimpleHeader navigatePath={-1}/>
             <section
                 className="bg-gray-50 dark:bg-gray-900 bg-cover bg-center bg-fixed"
@@ -48,7 +49,7 @@ function OrderChose() {
                     ))}
                 </div>
             </section>
-        </>
+        </ConditionalAccessComponent>
     );
 }
 
